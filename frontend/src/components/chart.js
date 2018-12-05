@@ -17,7 +17,7 @@ const Chart = (props) => {
   var pop_min = Math.min(...populations);
   var pop_range = pop_max - pop_min;
 
-  // Normalize between 0, 1
+  // Normalize population between 0, 1
   var dataArr = [];
   for (i = 0; i<populations.length; i++) {
     dataArr.push({x: x_percent[i], y: y_percent[i], size: (populations[i] - pop_min) / pop_range, label: props.labels[i], style: {fontSize: 4}});
