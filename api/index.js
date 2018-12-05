@@ -82,6 +82,14 @@ app.get('/locations', function (req, res) {
   res.json(DATA.locations);
 });
 
+/*
+ * Input: None
+ * Response: 200 Ok
+**/
+app.get('/healthz', function (req, res) {
+  res.sendStatus(200);
+});
+
 // Start application
 
 function start() {

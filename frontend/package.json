@@ -7,7 +7,8 @@
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1",
     "react-select": "^2.1.2",
-    "react-vis": "^1.11.5"
+    "react-vis": "^1.11.5",
+    "serve": "^10.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -23,6 +24,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "proxy": "http://localhost:3001"
+  ]
 }
