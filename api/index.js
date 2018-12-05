@@ -40,6 +40,16 @@ app.param('measure_id', function (req, res, next, measure_id) {
   next();
 });
 
+
+/*
+ * Path Params: Measure ID is a single measure id (retrieved from GET /measures)
+ *
+ * Query Params: locations is a comma separated list of location ids (retrieved from GET /locations)
+ * If no location is ids are passed, all locations are returned.
+ *
+ * Response: Array in order of requested locations (if no locations, in order of GET /locations)
+ * of {affected: Int, population: Int} for each location
+**/
 app.get('/data/:measure_id', function (req, res, next) {
 	var requested_locations = req.query.locations;
 	if(typeof requested_locations === "undefined") {
@@ -55,10 +65,19 @@ app.get('/data/:measure_id', function (req, res, next) {
 	res.json({"data": result});
 });
 
+/*
+ * Input: None
+ * Response: Object containing Measure Title, Measure ID as key, value pairs
+**/
 app.get('/measures', function (req, res) {
   res.json(DATA.measures);
 });
 
+
+/*
+ * Input: None
+ * Response: Object containing Location Title, Location ID as key, value pairs
+**/
 app.get('/locations', function (req, res) {
   res.json(DATA.locations);
 });
@@ -73,6 +92,7 @@ new Promise((res, rej) => {
 	if(fs.existsSync(CACHE_PATH)) {
 	    return res(read_saved_data(CACHE_PATH));
 	}
+	console.log("No cached data, parsing raw data csv...");
 	parse_csv("data.csv").then(data => {
 		save_data(data, CACHE_PATH);
 		return res(data);
