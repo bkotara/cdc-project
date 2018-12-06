@@ -1,0 +1,41 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: rest-api
+spec:
+  selector:
+    app: rest-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3001
+  type: NodePort
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: rest-api
+  name: rest-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest-api
+  template:
+    metadata:
+      labels:
+        app: rest-api
+    spec:
+      containers:
+      - image: gcr.io/cdc-data-224622/cdc-api:0.0.1
+        name: rest-api
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3001
+          initialDelaySeconds: 5
+          periodSeconds: 3
+      restartPolicy: Always

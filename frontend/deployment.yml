@@ -1,0 +1,35 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: NodePort
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - image: gcr.io/cdc-data-224622/cdc-frontend:0.0.1
+        name: rest-api
+      restartPolicy: Always
