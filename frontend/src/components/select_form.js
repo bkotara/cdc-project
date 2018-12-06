@@ -2,10 +2,6 @@ import React from 'react';
 import Select from 'react-select';
 
 class MeasureSelect extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleChange = (done) => {
     return (selectedOption) => {
       // wrapper to allow state change before interacting with parent

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Chart from './components/chart'
 import MeasureSelect from './components/select_form'
 
-
-const API_URL = "http://localhost:3001/";
+const API_URL = window.location.hostname.startsWith("localhost") ? "http://localhost:3001/" : "/";
 
 function fetch_endpoint(path) {
   return fetch(API_URL + path).then(response => {
@@ -42,7 +41,7 @@ class App extends Component {
       delete locations["US"];
       this.locations = locations;
       this.options = Object.keys(responses[0]).map(label => { return {value: responses[0][label], label: label}});
-    }).then(this.update_measure_data);
+    }).then(this.update_measure_data).catch(console.error);
   }
 
   update_measure_data() {
